@@ -1,5 +1,4 @@
-// should clean all the leaves from the fruit bucket
-// and return the cleaned fruit bucket
-export const cleanLeaves = (fruitBucket) => {
-  return fruitBucket.replace('🍂', '');
+export const cleanFruitBasket = (fruitBucket) => {
+    let fruitsToHarvest = /🍎|🍏/g;
+    return fruitBucket?.match(fruitsToHarvest)?.join('') || '';
 }
