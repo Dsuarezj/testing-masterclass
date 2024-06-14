@@ -10,7 +10,7 @@ it('should clean all the sheets present', () => {
 
 
 it('should clean all the things that are not fruits', () => {
-    expect(cleanFruitBasket('🍎🍂🍎🍂A🍎')).toEqual('🍎🍎🍎');
+    expect(cleanFruitBasket('🍎🍂🍏🍂A🍎')).toEqual('🍎🍏🍎');
 });
 
 it('should return empty basket when no argument was pass', () => {
