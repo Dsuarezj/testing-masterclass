@@ -7,7 +7,8 @@ export const cleanFruitBasket = (fruitBucket) => {
 
 export const sentToWarehouse = async (basket) => {
     try {
-        return await packageFruitBasket(basket);
+        let response = await packageFruitBasket(basket);
+        return { status: response.status, message: 'Basket received' };
     } catch (e) {
         return { status: 'error', message: e.message };
     }
