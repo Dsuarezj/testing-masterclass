@@ -9,7 +9,7 @@ beforeEach(() => {
     button = view.getByText('Clean basket');
 });
 
-describe('App', () => {
+describe('Cleaning', () => {
     test('should allow the user to modify the collect fruits on the basket', () => {
         fireEvent.change(input, { target: { value: '🍎🍂🍎🍂🍂🍏🍏🍏' } });
         expect(input.value).toEqual('🍎🍂🍎🍂🍂🍏🍏🍏');
