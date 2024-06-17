@@ -1,13 +1,13 @@
 import { packageFruitBasket } from "./warehouse";
 
 global.fetch = jest.fn();
+let basket = '🍎🍎🍏';
 
 beforeEach(() => {
     fetch.mockClear();
 });
 
 it('should call the correct URL with a fruit of basket', () => {
-    let basket = '🍎🍎🍏';
     packageFruitBasket(basket);
     expect(fetch).toHaveBeenCalledWith('http://localhost:3001/warehouse/package', {
         method: 'POST',
@@ -19,13 +19,9 @@ it('should call the correct URL with a fruit of basket', () => {
 })
 
 it('should  return ok if the basket was receive correctly', async () => {
-    let basket = '🍎🍎🍏';
     let expectedResponse = { status: 'received' };
-    fetch.mockImplementationOnce(() =>
-        Promise.resolve({
-            json:
-                () => Promise.resolve(expectedResponse),
-        }));
+    fetch.mockResolvedValue({
+        json: () => Promise.resolve(expectedResponse)});
 
     const response = await packageFruitBasket(basket);
 
@@ -33,8 +29,7 @@ it('should  return ok if the basket was receive correctly', async () => {
 });
 
 it('should return an error the api is down', async () => {
-    let basket = '🍎🍎🍏';
-    fetch.mockImplementationOnce(() => Promise.reject('API is down'));
+    fetch.mockRejectedValue('API is down');
 
     const response = await packageFruitBasket(basket);
 
