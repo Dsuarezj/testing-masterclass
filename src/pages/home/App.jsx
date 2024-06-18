@@ -15,6 +15,12 @@ function App() {
                 }}>
                     Clean basket
                 </button>
+
+                <button onClick={() => {
+                    setHarvestFruits('');
+                }}>
+                    Sent to warehouse
+                </button>
             </header>
         </div>
     );
