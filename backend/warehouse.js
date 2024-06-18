@@ -7,6 +7,7 @@ app.use(express.json());
 
 
 app.post('/warehouse/package', (req, res) => {
+    console.log('got a fruit package:', req.body);
     res.json({ status: 'received' });
 })
 

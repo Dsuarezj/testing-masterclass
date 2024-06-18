@@ -1,10 +1,11 @@
 import './App.css';
 import {useState} from "react";
-import {cleanFruitBasket} from "../../shared/services/postHarvestHandling";
+import {cleanFruitBasket, sentToWarehouse} from "../../shared/services/postHarvestHandling";
 
 function App() {
 
     const [harvestFruits, setHarvestFruits] = useState('🍎🍂🍎🍂A🍏');
+
     return (
         <div className="App">
             <header className="App-header">
@@ -16,7 +17,8 @@ function App() {
                     Clean basket
                 </button>
 
-                <button onClick={() => {
+                <button onClick={async () => {
+                    await sentToWarehouse(harvestFruits);
                     setHarvestFruits('');
                 }}>
                     Sent to warehouse
