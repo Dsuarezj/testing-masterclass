@@ -1,16 +1,12 @@
 export async function packageFruitBasket(basket) {
-    if (!basket) throw new Error('Basket is empty');
-    try {
-        const result = await fetch('http://localhost:3001/warehouse/package', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({basket: basket})
-        });
+    if (!basket) return Promise.reject(new Error('Basket is empty'));
 
-        return await result.json();
-    } catch (e) {
-        return {status: 'failed'};
-    }
+    return await fetch('http://localhost:3001/warehouse/package', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ basket: basket })})
+        .then(response => response.json())
+        .catch(() => ({ status: 'failed' }));
 }

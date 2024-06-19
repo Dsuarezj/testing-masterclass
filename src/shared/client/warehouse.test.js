@@ -9,11 +9,10 @@ beforeEach(() => {
 it('should  return ok if the basket was receive correctly', async () => {
     let basket = '🍎🍎🍏';
     let expectedResponse = { status: 'received' };
-    fetch.mockImplementationOnce(() =>
-        Promise.resolve({
-            json:
-                () => Promise.resolve(expectedResponse),
-        }));
+    fetch.mockResolvedValue({
+        json: () => Promise.resolve(expectedResponse)
+    });
+
 
     const response = await packageFruitBasket(basket);
 
@@ -29,7 +28,7 @@ it('should  return ok if the basket was receive correctly', async () => {
 
 it('should return an error when the api is down', async () => {
     let basket = '🍎🍎🍏';
-    fetch.mockImplementationOnce(() => Promise.reject('API is down'));
+    fetch.mockRejectedValueOnce('API is down');
 
     const response = await packageFruitBasket(basket);
 

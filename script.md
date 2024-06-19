@@ -459,3 +459,34 @@ it('should  return ok if the basket was receive correctly', async () => {
     import { packageFruitBasket } from "./warehouse";
 
 - [ ] recap what is integration test
+- [ ] refactor, show that we can change the implementation and instead of using await async we can use then and catch. 
+  ```
+  export async function packageFruitBasket(basket) {
+      if (!basket) return Promise.reject(new Error('Basket is empty'));
+
+      return await fetch('http://localhost:3001/warehouse/package', {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ basket: basket })})
+          .then(response => response.json())
+          .catch(() => ({ status: 'failed' }));
+  }
+  ```
+- [ ] refactor the test and instead of using mockImplementationOnce you can use mockResolvedValueOnce and mockRejectedValueOnce.
+  ```
+  it('should  return ok if the basket was receive correctly', async () => {
+    ...
+    fetch.mockResolvedValue({
+        json: () => Promise.resolve(expectedResponse)
+    });
+    ...
+  });
+
+  it('should return an error when the api is down', async () => {
+    ...
+    fetch.mockRejectedValueOnce('API is down');
+    ...
+  });
+  ```
