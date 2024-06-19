@@ -1,26 +1,28 @@
 import './App.css';
-import {useState} from "react";
+import { useState } from "react";
+import { cleanFruitBasket } from "../../shared/services/postHarvestHandling";
 
 function App() {
-
-  const [count, setCount] = useState(0);
-  const [x, setX] = useState(42);
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src="logo.svg" className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <button onClick={() => {
-            setCount(count + 1);
-            setX(x + 10)
-        }}>
-          x is {x}. count is {count}, btw the current timestamp is {Date.now().toLocaleString()}
-        </button>
-      </header>
-    </div>
-  );
+    const [basket, setBasket] = useState('🍎🍂🍎🍂🍂🍏🍏🍏');
+    return (
+        <div className="App">
+            <header className="App-header">
+                <label htmlFor="basketFruits">Fruits' basket</label>
+                <input
+                    id="basketFruits"
+                    value={basket}
+                    onChange={(event) => {
+                        setBasket(event.target.value);
+                    }}
+                />
+                <button onClick={() => {
+                    setBasket(cleanFruitBasket(basket));
+                }}>
+                    Clean basket
+                </button>
+            </header>
+        </div>
+    );
 }
 
 export default App;

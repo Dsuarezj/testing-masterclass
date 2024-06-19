@@ -116,3 +116,163 @@ Note: First refactor the code so you can warranty that the new code is working a
 
 - [ ] Delete the comment and mention that our test will be our life documentation, that will help us to know what the code should do and how it should behave, and it will change if the feature change. 
 - [ ] Finish with a recap of what is unit test.
+
+### Component test
+
+- [ ] Go to [App.test.js](./src/pages/home/App.test.js) and mention that we will use a new library now for running this test: [react-testing-library](https://testing-library.com/docs/react-testing-library/cheatsheet).
+- [ ] Add the `.only` to the test, so we can focus on this test only and add a line of `screen.debug();` inside the test.
+- [ ] Run the test, show that the component is rendered as html. Mention that this test avoids including implementation details of your components and you can on how they are going to behave.
+- [ ] Add the test to check if the button is rendered and if the button is clickable.
+  ```
+  import { render, screen } from '@testing-library/react';
+  import App from './App';
+
+  test.only('should render a button to clean basket', () => {
+    const view = render(<App/>);
+    const button = view.getByText('Clean basket');
+    screen.debug();
+    expect(button).toBeInTheDocument();
+  });
+  ```
+- [ ] Run the test to check if it is failing.
+- [ ] Remove all the extra code and change the text of the button to `Clean basket` and run the test to check if it is green.
+
+   ```
+  import './App.css';
+  import {useState} from "react";
+
+  function App() {
+
+    const [count, setCount] = useState(0);
+    return (
+      <div className="App">
+        <header className="App-header">
+          <button onClick={() => {
+              setCount(count + 1);
+          }}>
+              Clean basket
+          </button>
+        </header>
+      </div>
+    );
+  }
+
+  export default App;
+   ```
+- [ ] Remove the only and debug, and write the second test that will check that we have an input that allow the user to enter the fruit basket.
+
+Note: refer to the cheatsheet to show what will be the best way to find the element. Mention that this is promoting good practices of accessibility and that is why is reinforcing to user a label or a placeholder for an input.
+
+  ```
+  import { render, fireEvent } from '@testing-library/react';
+  import App from './App';
+
+  ...
+
+  test('should allow the user to modify the collect fruits on the basket', () => {
+    const view = render(<App/>);
+    const input = view.getByLabelText('Fruits\' basket');
+    fireEvent.change(input, {target: {value: '🍎🍂🍎🍂🍂🍏🍏🍏🍏'}});
+    expect(input.value).toEqual('🍎🍂🍎🍂🍂🍏🍏🍏🍏');
+  });
+  ```
+
+- [ ] Run the test to check if it is failing.
+- [ ] Implement the input and run the test to check if it is green. (mention that for testing purpose we are going to add a initial state to the basket)
+
+  ```
+  import './App.css';
+  import {useState} from "react";
+
+  function App() {
+    const [count, setCount] = useState(0);
+    const [basket, setBasket] = useState('🍎🍂🍎🍂🍂🍏🍏🍏');
+    return (
+      <div className="App">
+      <header className="App-header">
+      <label htmlFor="basketFruits">Fruits' basket</label>
+      <input
+          id="basketFruits"
+          value={basket}
+          onChange={(event) => {
+            setBasket(event.target.value);
+          }}
+      />
+      <button onClick={() => {
+          setCount(count + 1);
+      }}>
+        Clean basket
+      </button>
+      </header>
+      </div>
+    );
+  }
+
+  export default App;
+  ```
+- [ ] Write a test that check that the user can click the button and the basket is cleaned.
+
+  ```
+  import { render, fireEvent } from '@testing-library/react';
+  import App from './App';
+
+  ...
+
+  test('should allow the user to clean the basket', () => {
+    const view = render(<App/>);
+    const input = view.getByLabelText('Fruits\' basket');
+    const button = view.getByText('Clean basket');
+
+    fireEvent.change(input, { target: { value: '🍎🍂🍎🍂🍂🍏🍏🍏' } });
+    fireEvent.click(button);
+
+    expect(input.value).toEqual('🍎🍎🍏🍏🍏');
+  });
+  ```
+- [ ] Run the test to check if it is failing.
+- [ ] Run the minimum code to make it pass.
+
+  ```
+  ...
+  <button onClick={() => { setBasket('🍎🍎🍏🍏🍏'); }}>
+    Clean basket
+  </button>
+  ...
+  ```
+Note: Mention that sometimes we need to think on how we can test different cases so we can avoid this. 
+- [ ] Introduce (test.each)[https://jestjs.io/es-ES/docs/api]
+- Rewrite the test to use test.each.
+  ```
+  import { render, fireEvent } from '@testing-library/react';
+  import App from './App';
+
+  ...
+
+  test.each([
+        {basket: '🍎🍂🍎🍂🍂🍏🍏🍏', expected: '🍎🍎🍏🍏🍏'},
+        {basket: '🍎🍂🍂🍏', expected: '🍎🍏'},
+    ])('should clean the basket with $basket when the user click on the button', ({ basket, expected }) => {
+        const view = render(<App/>);
+        const input = view.getByLabelText('Fruits\' basket');
+        const button = view.getByText('Clean basket');
+
+        fireEvent.change(input, { target: { value: basket } });
+        fireEvent.click(button);
+
+        expect(input.value).toEqual(expected);
+    });
+  ```
+- [ ] Check that you have one more test, and now it is failing, you can add also one more line on the cases. 
+- [ ] Implement the code to make it pass.
+  ```
+  ...
+  import { cleanFruitBasket } from "../../shared/services/postHarvestHandling";
+  ...
+  <button onClick={() => {
+    setBasket(cleanFruitBasket(basket));
+  }}>
+    Clean basket
+  </button>
+  ...
+  ```
+- [ ] With all the test green make a commit.
