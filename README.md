@@ -1,70 +1,62 @@
-# Getting Started with Create React App
+# Bulletproof Code: Automated Testing Strategies for Agile Developers
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This repository contains the practical part of the master class "Bulletproof Code: Automated Testing Strategies for Agile Developers." It is bootstrapped with [Create React App](https://github.com/facebook/create-react-app) and serves as a simple example to learn different types of tests and tools using Test-Driven Development (TDD).
 
-## Available Scripts
+## Overview
 
-In the project directory, you can run:
+In this project, we will create a simple text filtering application. This will involve creating some buttons and other UI elements to practice writing different types of tests, including unit tests, component tests, integration test, and functional tests. We will use TDD to drive the development process.
 
-### `npm start`
+## Getting Started
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+### Prerequisites
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+Make sure you have the following installed:
 
-### `npm test`
+- [Node.js](https://nodejs.org/) (version 20.10.0 or higher)
+- [Git](https://git-scm.com/)
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Installation
 
-### `npm run build`
+```bash
+npm install
+```
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### Running the Application
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+To start the development server, run:
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+```bash
+npm start
+```
 
-### `npm run eject`
+Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+### Running Tests
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+To run the tests, use the following command:
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+```bash
+npm test
+```
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+This will launch the test runner in interactive watch mode.
 
-## Learn More
+## Learning Objectives
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+By working through this project, you will learn how to:
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+- Write and run unit tests, component tests, and functional tests.
+- Apply Test-Driven Development (TDD) principles.
+- Use testing tools and libraries such as Jest and React Testing Library.
 
-### Code Splitting
+## Learning Resources:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+- [React Testing Library Documentation] (https://testing-library.com/docs/react-testing-library/intro/)
+- [Jest Documentation] (https://jestjs.io/)
+- [TDD] (https://www.thoughtworks.com/insights/blog/test-driven-development-best-thing-has-happened-software-design)
+- [Vitest] (https://vitest.dev/api/)
+- [Test doubles] (https://freedium.cfd/https://pandaquests.medium.com/test-doubles-in-javascript-3293767e33e0#:~:text=The%20purpose%20of%20test%20doubles,in%20the%20system%20during%20testing.)
+- [Migrate jest to vite] (https://coreui.io/blog/how-to-migrate-create-react-app-to-vite/)
 
-### Analyzing the Bundle Size
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Refer to the branch `solution` to see the end result
