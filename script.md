@@ -299,3 +299,163 @@ Note: Mention that sometimes we need to think on how we can test different cases
   ```
 - [ ] Recap what is component test.
 - [ ] Make a break.
+
+### Integration test
+
+- [ ] Describe that now we want to create a client to connects to an external server to sent the fruits' basket.
+- [ ] Create a `client` folder in [shared folder](./src/shared) with the name `warehouse.test.js`.
+- [ ] Explain the concept of test doubles and how we can use them to test our code without depending on external services.
+- [ ] Write the first test we are pointing to the correct endpoint with the right verb and the body.
+  ```
+  import { packageFruitBasket } from "./warehouse";
+
+    global.fetch = jest.fn();
+
+    beforeEach(() => {
+      fetch.mockClear();
+    });
+
+    it('should call the correct URL with a fruit of basket', () => {
+      let basket = '🍎🍎🍏';
+      packageFruitBasket(basket);
+      expect(fetch).toHaveBeenCalledWith('http://localhost:3001/warehouse/package', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ basket: basket })
+      });
+  })
+  ```
+- [ ] Mention that this is a mock, we have change the fetch method to a mock function and check if it was called with the correct parameters.
+- [ ] Run the test to check if it is failing
+- [ ] Implement the code to make it pass.
+  ```
+  export function packageFruitBasket(basket) {
+    fetch('http://localhost:3001/warehouse/package', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ basket: basket })
+    });
+  }
+  ```
+- [ ] Run the test to check if it is green.
+- [ ] Write a test that check if the method return ok when the basket was received.
+  ```
+  it('should  return ok if the basket was receive correctly', async () => {
+    let basket = '🍎🍎🍏';
+    let expectedResponse = { status: 'received' };
+    fetch.mockImplementationOnce(() =>
+        Promise.resolve({
+            json:
+                () => Promise.resolve(expectedResponse),
+        }
+    ));
+
+    const response = await packageFruitBasket(basket);
+
+    expect(response).toEqual(expectedResponse);
+  });
+  ```
+- [ ] Mention that in here we are using a stub, in this case we are providing a response that we could like to receive given certain conditions.
+- [ ] Run the test to check if it is failing.
+- [ ] Implement the code to make it pass.
+  ```
+  export async function packageFruitBasket(basket) {
+    const response = await fetch('http://localhost:3001/warehouse/package', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ basket: basket })
+    });
+    return await response.json();
+  }
+  ```
+- [ ] Run the test to check if it is green.
+- [ ] Remove the previous test and move to assert to this test and remark the difference between the mock and stub.
+```
+it('should  return ok if the basket was receive correctly', async () => {
+    ...
+    expect(fetch).toHaveBeenCalledWith('http://localhost:3001/warehouse/package', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ basket: basket })
+    });
+   ...
+});
+```
+- [ ] Write what happen when the api is down and can not make the request.
+  ```
+  it('should return an error the api is down', async () => {
+    let basket = '🍎🍎🍏';
+    fetch.mockImplementationOnce(() => Promise.reject('API is down'));
+
+    const response = await packageFruitBasket(basket);
+
+    expect(response).toEqual({ status: 'failed' });
+  });
+  ```
+- [ ] Run the test to check if it is failing.
+- [ ] Implement the code to make it pass.
+  ```
+  export async function packageFruitBasket(basket) {
+    try {
+      const response = await fetch('http://localhost:3001/warehouse/package', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ basket: basket })
+      });
+      return await response.json();
+    } catch (error) {
+      return { status: 'failed' };
+    }
+  }
+  ```
+- [ ] Run the test to check if it is green.
+- [ ] Write a test that check if the basket is empty, we should not make the request.
+  ```
+  it('should not make the request if the basket is empty and throw an error' , async () => {
+    let basket = null;
+    await expect(packageFruitBasket(basket)).rejects.toThrow('Basket is empty');
+  });
+  ```
+- [ ] Run the test to check if it is failing.
+- [ ] Implement the code to make it pass.
+  ```
+  export async function packageFruitBasket(basket) {
+    if (!basket) throw new Error('Basket is empty');
+    ...
+  }
+  ```
+- [ ] commit the code
+- [ ] refactor the code
+    **Code**
+    We can change the await for a then to show that we are not testing implementation details but the behavior of the code.
+    ```
+    export async function packageFruitBasket(basket) {
+      if (!basket) throw new Error('Basket is empty');
+      try {
+          return await fetch('http://localhost:3001/warehouse/package', {
+              method: 'POST',
+              headers: {
+                  'Content-Type': 'application/json'
+              },
+              body: JSON.stringify({ basket: basket })
+          }).then(response => response.json());
+      } catch (e) {
+          return { status: 'failed' };
+      }
+    }
+    ```
+    **Test**
+    ```
+    import { packageFruitBasket } from "./warehouse";
+
+- [ ] recap what is integration test
