@@ -276,3 +276,26 @@ Note: Mention that sometimes we need to think on how we can test different cases
   ...
   ```
 - [ ] With all the test green make a commit.
+- [ ] Propose a refactor, probably in the code there is not refactor and only the test need to be refactored. (question if the first two test that we wrote is needed now that we have the test.each, there is nothing wrong on delete test as long there are other test that cover that behavior, we can also include a describe method to be more descriptive on what we are testing)
+  ```
+  import { render, fireEvent } from '@testing-library/react';
+  import App from './App';
+
+  describe('clean harvest basket', () => {
+    test.each([
+      {basket: '🍎🍂🍎🍂🍂🍏🍏🍏', expected: '🍎🍎🍏🍏🍏'},
+      {basket: '🍎🍂🍂🍏', expected: '🍎🍏'},
+    ])('should clean the basket with $basket when the user click on the button', ({ basket, expected }) => {
+      const view = render(<App/>);
+      const input = view.getByLabelText('Fruits\' basket');
+      const button = view.getByText('Clean basket');
+
+      fireEvent.change(input, { target: { value: basket } });
+      fireEvent.click(button);
+
+      expect(input.value).toEqual(expected);
+    });
+  });
+  ```
+- [ ] Recap what is component test.
+- [ ] Make a break.
