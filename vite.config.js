@@ -1,4 +1,4 @@
-import { defineConfig } from 'vitest/config'
+import { configDefaults, defineConfig } from 'vitest/config'
 import react from '@vitejs/plugin-react';
 
 export default defineConfig(() => {
@@ -14,6 +14,10 @@ export default defineConfig(() => {
       setupFiles: './src/setupTests.js',
       css: true,
       reporters: ['verbose'],
+      exclude: [
+          ...configDefaults.exclude,
+        '**/tests/**'
+      ],
       coverage: {
         reporter: ['text', 'json', 'html'],
         include: ['src/**/*'],
