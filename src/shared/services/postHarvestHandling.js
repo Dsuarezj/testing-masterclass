@@ -1,7 +1,4 @@
-// should clean all the leaves from the fruit bucket
-// and return the cleaned fruit bucket
-export function cleanLeaves(basket) {
-  if (!basket) return '';
+export function cleanFruitBasket(fruitBucket) {
   let fruitsToHarvest = /🍎|🍏/g;
-  return basket?.match(fruitsToHarvest)?.join('')
+  return fruitBucket?.match(fruitsToHarvest)?.join('') || '';
 }

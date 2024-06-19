@@ -84,4 +84,35 @@ This is a guide about to how combine this repo with the slides.
     ```
 - [ ] Check that the test is green.  
 - [ ] Ask what happen with the refactor step? (mention that sometimes is not necessary to refactor every step but it is important to stop once in a while and clean the house).
-- [ ] Recommend to first do a commit before refactor, and then do the refactor.
+- [ ] Recommend to first do a commit before refactor, and then do the refactor. Proposed refactor:
+
+
+  **Code**
+
+  ```
+  export function cleanFruitBasket(fruitBucket) {
+    let fruitsToHarvest = /🍎|🍏/g;
+    return fruitBucket?.match(fruitsToHarvest)?.join('') || '';
+  }
+  ```
+
+  **Test**
+
+  ```
+  import { cleanFruitBasket } from "./postHarvestHandling";
+
+  it('should collect only red and green apples and clean all the leaves or extra dirt', () => {
+      const otherDirt = Math.random().toString(36);
+      expect(cleanFruitBasket('🍎🍂🍎🍂🍀' + otherDirt + '🍏')).toEqual('🍎🍎🍏');
+  });
+
+  it('should return an empty if no basket is provided', () => {
+      expect(cleanFruitBasket()).toEqual('');
+  });
+
+  ```
+
+Note: First refactor the code so you can warranty that the new code is working as expected. Then you can refactor the test, try not to delete cases that are important to check the behavior of the code.
+
+- [ ] Delete the comment and mention that our test will be our life documentation, that will help us to know what the code should do and how it should behave, and it will change if the feature change. 
+- [ ] Finish with a recap of what is unit test.
