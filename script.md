@@ -26,7 +26,7 @@ This is a guide about to how combine this repo with the slides.
   `npm test`
 - [ ] Delete the fake test
 - [ ] Write the first test that check if all the leaves are cleaned from the basket on the [test file](./src/shared/services/postHarvestHandling.test.js)
-  ```
+  ```javascript
   import { cleanLeaves } from "./postHarvestHandling";
   
   it('should collect only red and green apples', () => {
@@ -36,14 +36,14 @@ This is a guide about to how combine this repo with the slides.
 - [ ] Run the test to check if it is failing
 - [ ] Ask do you think this step is necessary? (Because we want to double check that the test is actual testing what we want to implement, you can change the name of the method to show another error and prove that test might not be right implemented
 - [ ] Implement the method to pass the test
-  ```
+  ```javascript
   export function cleanLeaves(basket) {
     return basket.replace(/🍂/g, '');
   }
   ```
 - [ ] Check that the test is green. 
 - [ ] Ask what will happen if we don't receive any basket.
-  ```
+  ```javascript
     it('should return an empty if no basket is provided', () => {
         expect(cleanLeaves()).toEqual('');
     });
@@ -51,7 +51,7 @@ This is a guide about to how combine this repo with the slides.
 - [ ] Remark that in here is where we can see the benefits of TDD, because it makes us stop and think about the edge cases that we might not ask ourselves about and how we want it to behave (want to return null, want to throw exception, want to return empty, etc).  
 - [ ] Run the test to check if it is failing.
 - [ ] Implement the method to pass the test
-  ```
+  ```javascript
   export function cleanLeaves(basket ) {
     if (!basket) return '';
     return basket.replace(/🍂/g, '');
@@ -59,7 +59,7 @@ This is a guide about to how combine this repo with the slides.
   ```
 - [ ] Check that the test is green and remember that we should write the minimum code necessary to pass the test. 
 - [ ] Ask what will happen if we receive another type of leave or other impurities? and write the test for it. 
-  ```
+  ```javascript
     it('should clean all the leaves or things that are not apples', () => {
         expect(cleanLeaves('🍎🍂🍎🍂🍀A🍎')).toEqual('🍎🍎🍎');
     });
@@ -68,14 +68,14 @@ This is a guide about to how combine this repo with the slides.
 - [ ] Ask to use an ai tool to help us to implement the method base on our test. (you can use [Perplexit](http://perplexity.ai))
 - [ ] Copy the code that the AI tool provide and check if the test is green (hopefully it is wrong and should break the other test, this should remark that test had help us to not break previous features trying to implement a new one)
   Example of the code that the AI tool provide:
-  ```
+  ```javascript
   function cleanLeaves(basket) {
       if (!basket) return '';
       return basket.replace(/[^🍎🍏]/g, '');
   }
   ```
 - [ ] Implement the correct function: 
-    ```
+    ```javascript
     export function cleanLeaves(basket) {
        if (!basket) return '';
        let fruitsToHarvest = /🍎|🍏/g;
@@ -89,7 +89,7 @@ This is a guide about to how combine this repo with the slides.
 
   **Code**
 
-  ```
+  ```javascript
   export function cleanFruitBasket(fruitBucket) {
     let fruitsToHarvest = /🍎|🍏/g;
     return fruitBucket?.match(fruitsToHarvest)?.join('') || '';
@@ -98,7 +98,7 @@ This is a guide about to how combine this repo with the slides.
 
   **Test**
 
-  ```
+  ```javascript
   import { cleanFruitBasket } from "./postHarvestHandling";
 
   it('should collect only red and green apples and clean all the leaves or extra dirt', () => {
@@ -123,7 +123,7 @@ Note: First refactor the code so you can warranty that the new code is working a
 - [ ] Add the `.only` to the test, so we can focus on this test only and add a line of `screen.debug();` inside the test.
 - [ ] Run the test, show that the component is rendered as html. Mention that this test avoids including implementation details of your components and you can on how they are going to behave.
 - [ ] Add the test to check if the button is rendered and if the button is clickable.
-  ```
+  ```javascript
   import { render, screen } from '@testing-library/react';
   import App from './App';
 
@@ -137,7 +137,7 @@ Note: First refactor the code so you can warranty that the new code is working a
 - [ ] Run the test to check if it is failing.
 - [ ] Remove all the extra code and change the text of the button to `Clean basket` and run the test to check if it is green.
 
-   ```
+   ```javascript
   import './App.css';
   import {useState} from "react";
 
@@ -163,7 +163,7 @@ Note: First refactor the code so you can warranty that the new code is working a
 
 Note: refer to the cheatsheet to show what will be the best way to find the element. Mention that this is promoting good practices of accessibility and that is why is reinforcing to user a label or a placeholder for an input.
 
-  ```
+  ```javascript
   import { render, fireEvent } from '@testing-library/react';
   import App from './App';
 
@@ -180,7 +180,7 @@ Note: refer to the cheatsheet to show what will be the best way to find the elem
 - [ ] Run the test to check if it is failing.
 - [ ] Implement the input and run the test to check if it is green. (mention that for testing purpose we are going to add a initial state to the basket)
 
-  ```
+  ```javascript
   import './App.css';
   import {useState} from "react";
 
@@ -212,7 +212,7 @@ Note: refer to the cheatsheet to show what will be the best way to find the elem
   ```
 - [ ] Write a test that check that the user can click the button and the basket is cleaned.
 
-  ```
+  ```javascript
   import { render, fireEvent } from '@testing-library/react';
   import App from './App';
 
@@ -232,7 +232,7 @@ Note: refer to the cheatsheet to show what will be the best way to find the elem
 - [ ] Run the test to check if it is failing.
 - [ ] Run the minimum code to make it pass.
 
-  ```
+  ```javascript
   ...
   <button onClick={() => { setBasket('🍎🍎🍏🍏🍏'); }}>
     Clean basket
@@ -242,7 +242,7 @@ Note: refer to the cheatsheet to show what will be the best way to find the elem
 Note: Mention that sometimes we need to think on how we can test different cases so we can avoid this. 
 - [ ] Introduce (test.each)[https://jestjs.io/es-ES/docs/api]
 - Rewrite the test to use test.each.
-  ```
+  ```javascript
   import { render, fireEvent } from '@testing-library/react';
   import App from './App';
 
@@ -264,7 +264,7 @@ Note: Mention that sometimes we need to think on how we can test different cases
   ```
 - [ ] Check that you have one more test, and now it is failing, you can add also one more line on the cases. 
 - [ ] Implement the code to make it pass.
-  ```
+  ```javascript
   ...
   import { cleanFruitBasket } from "../../shared/services/postHarvestHandling";
   ...
@@ -277,7 +277,7 @@ Note: Mention that sometimes we need to think on how we can test different cases
   ```
 - [ ] With all the test green make a commit.
 - [ ] Propose a refactor, probably in the code there is not refactor and only the test need to be refactored. (question if the first two test that we wrote is needed now that we have the test.each, there is nothing wrong on delete test as long there are other test that cover that behavior, we can also include a describe method to be more descriptive on what we are testing)
-  ```
+  ```javascript
   import { render, fireEvent } from '@testing-library/react';
   import App from './App';
 
@@ -306,7 +306,7 @@ Note: Mention that sometimes we need to think on how we can test different cases
 - [ ] Create a `client` folder in [shared folder](./src/shared) with the name `warehouse.test.js`.
 - [ ] Explain the concept of test doubles and how we can use them to test our code without depending on external services.
 - [ ] Write the first test we are pointing to the correct endpoint with the right verb and the body.
-  ```
+  ```javascript
   import { packageFruitBasket } from "./warehouse";
 
     global.fetch = jest.fn();
@@ -330,7 +330,7 @@ Note: Mention that sometimes we need to think on how we can test different cases
 - [ ] Mention that this is a mock, we have change the fetch method to a mock function and check if it was called with the correct parameters.
 - [ ] Run the test to check if it is failing
 - [ ] Implement the code to make it pass.
-  ```
+  ```javascript
   export function packageFruitBasket(basket) {
     fetch('http://localhost:3001/warehouse/package', {
       method: 'POST',
@@ -343,7 +343,7 @@ Note: Mention that sometimes we need to think on how we can test different cases
   ```
 - [ ] Run the test to check if it is green.
 - [ ] Write a test that check if the method return ok when the basket was received.
-  ```
+  ```javascript
   it('should  return ok if the basket was receive correctly', async () => {
     let basket = '🍎🍎🍏';
     let expectedResponse = { status: 'received' };
@@ -362,7 +362,7 @@ Note: Mention that sometimes we need to think on how we can test different cases
 - [ ] Mention that in here we are using a stub, in this case we are providing a response that we could like to receive given certain conditions.
 - [ ] Run the test to check if it is failing.
 - [ ] Implement the code to make it pass.
-  ```
+  ```javascript
   export async function packageFruitBasket(basket) {
     const response = await fetch('http://localhost:3001/warehouse/package', {
       method: 'POST',
@@ -376,7 +376,7 @@ Note: Mention that sometimes we need to think on how we can test different cases
   ```
 - [ ] Run the test to check if it is green.
 - [ ] Remove the previous test and move to assert to this test and remark the difference between the mock and stub.
-```
+```javascript
 it('should  return ok if the basket was receive correctly', async () => {
     ...
     expect(fetch).toHaveBeenCalledWith('http://localhost:3001/warehouse/package', {
@@ -390,7 +390,7 @@ it('should  return ok if the basket was receive correctly', async () => {
 });
 ```
 - [ ] Write what happen when the api is down and can not make the request.
-  ```
+  ```javascript
   it('should return an error the api is down', async () => {
     let basket = '🍎🍎🍏';
     fetch.mockImplementationOnce(() => Promise.reject('API is down'));
@@ -402,7 +402,7 @@ it('should  return ok if the basket was receive correctly', async () => {
   ```
 - [ ] Run the test to check if it is failing.
 - [ ] Implement the code to make it pass.
-  ```
+  ```javascript
   export async function packageFruitBasket(basket) {
     try {
       const response = await fetch('http://localhost:3001/warehouse/package', {
@@ -420,7 +420,7 @@ it('should  return ok if the basket was receive correctly', async () => {
   ```
 - [ ] Run the test to check if it is green.
 - [ ] Write a test that check if the basket is empty, we should not make the request.
-  ```
+  ```javascript
   it('should not make the request if the basket is empty and throw an error' , async () => {
     let basket = null;
     await expect(packageFruitBasket(basket)).rejects.toThrow('Basket is empty');
@@ -428,7 +428,7 @@ it('should  return ok if the basket was receive correctly', async () => {
   ```
 - [ ] Run the test to check if it is failing.
 - [ ] Implement the code to make it pass.
-  ```
+  ```javascript
   export async function packageFruitBasket(basket) {
     if (!basket) throw new Error('Basket is empty');
     ...
@@ -438,7 +438,7 @@ it('should  return ok if the basket was receive correctly', async () => {
 - [ ] refactor the code
     **Code**
     We can change the await for a then to show that we are not testing implementation details but the behavior of the code.
-    ```
+    ```javascript
     export async function packageFruitBasket(basket) {
       if (!basket) throw new Error('Basket is empty');
       try {
@@ -459,7 +459,7 @@ it('should  return ok if the basket was receive correctly', async () => {
     import { packageFruitBasket } from "./warehouse";
 
 - [ ] refactor, show that we can change the implementation and instead of using await async we can use then and catch. 
-  ```
+  ```javascript
   export async function packageFruitBasket(basket) {
       if (!basket) return Promise.reject(new Error('Basket is empty'));
 
@@ -474,7 +474,7 @@ it('should  return ok if the basket was receive correctly', async () => {
   }
   ```
 - [ ] refactor the test and instead of using mockImplementationOnce you can use mockResolvedValueOnce and mockRejectedValueOnce.
-  ```
+  ```javascript
   it('should  return ok if the basket was receive correctly', async () => {
     ...
     fetch.mockResolvedValue({
@@ -496,7 +496,7 @@ it('should  return ok if the basket was receive correctly', async () => {
 - [ ] Explain that when we try to make our test more realistic we can use a mock server to simulate the behavior of the server, since we are going to use the real implementation of the fetch method. 
 - [ ] Create the integration test `postHarvestHandling.integration.test.js` file in the [services folder](./src/shared/services).
 - [ ] Mention that in here we will use a spy that will allow us to check if the fetch method was called with at least once. 
-```
+```javascript
 import { sentToWarehouse } from "./postHarvestHandling";
 
 describe('Storage', () => {
@@ -515,7 +515,7 @@ describe('Storage', () => {
 
 - [ ] Run the test to check if it is failing.
 - [ ] Implement the code to make it pass.
-  ```
+  ```javascript
   export const sentToWarehouse = async (basket) => {
     let response = await packageFruitBasket(basket);
     return { "status": response.status, message: "Basket received"};
