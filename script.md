@@ -458,7 +458,6 @@ it('should  return ok if the basket was receive correctly', async () => {
     ```
     import { packageFruitBasket } from "./warehouse";
 
-- [ ] recap what is integration test
 - [ ] refactor, show that we can change the implementation and instead of using await async we can use then and catch. 
   ```
   export async function packageFruitBasket(basket) {
@@ -490,3 +489,40 @@ it('should  return ok if the basket was receive correctly', async () => {
     ...
   });
   ```
+- [ ] recap what is integration test
+
+### Mock server
+
+- [ ] Explain that when we try to make our test more realistic we can use a mock server to simulate the behavior of the server, since we are going to use the real implementation of the fetch method. 
+- [ ] Create the integration test `postHarvestHandling.integration.test.js` file in the [services folder](./src/shared/services).
+- [ ] Mention that in here we will use a spy that will allow us to check if the fetch method was called with at least once. 
+```
+import { sentToWarehouse } from "./postHarvestHandling";
+
+describe('Storage', () => {
+    it('should sent the basket to the warehouse', async () => {
+        const fetchSpy =
+            jest.spyOn(global, 'fetch')
+
+        let response = await sentToWarehouse('🍎🍎🍏');
+
+        expect(response).toEqual({status: 'received', message: 'Basket received'});
+        expect(fetchSpy).toHaveBeenCalled();
+        fetchSpy.mockRestore();
+    });
+});
+```
+
+- [ ] Run the test to check if it is failing.
+- [ ] Implement the code to make it pass.
+  ```
+  export const sentToWarehouse = async (basket) => {
+    let response = await packageFruitBasket(basket);
+    return { "status": response.status, message: "Basket received"};
+  }
+  ```
+- [ ] See that test is failing and ask why? (In here we are doing a request to the real server, and we are not running the server)
+- [ ] Show the backend (a dummy endpoint that is under construction).
+- [ ] Start the backend and run the test again to check if it is green.
+  `cd backend && npm install && npm start`
+- [ ] Mention that what happen if the api we are calling is not ready or charge money every time we do a request. Mention than alternative can be use a library to mock the server.
