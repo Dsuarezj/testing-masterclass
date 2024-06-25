@@ -547,6 +547,34 @@ afterAll(() => server.close())
 ### E2E
 - We will use [Playwright](https://playwright.dev/) to run the test.
 - Run the command to install Playwright `npm install -D playwright`
-- Run the command to install the browser that you want to use `npx playwright install`
+- Run the command to install the browser that you want to use `npm init playwright@latest`
 - [ ] While installing explain that in here we try to test the whole application as close as possible to the real world, always taking into account the user perspective, try to write one or two base on the longest user journey. These are the most expensive tests, since it will write on the real database and will use the real server, and we will try to simulate real devices. 
 - [ ] Mention the extension that you can use to record the test write test.
+- [ ] add the script to run the test in the package.json
+  ```json
+  "scripts": {
+    ...
+    "e2e": "playwright test",
+    "e2e-ui": "playwright test --ui"
+  }
+  ```
+- [ ] Check the playwright.config.js file and see that we have the configuration to run the test in different browsers. Uncomment the last part: 
+```
+webServer: {
+     command: 'npm run start',
+     url: 'http://localhost:5173/',
+     reuseExistingServer: !process.env.CI,
+},
+```
+- [ ] Run `npm run e2e-ui` to see the test running in the browser.
+- [ ] Run `npm test` and mention that is also taking the playwright test and trying to run with vitest. So we will to exclude on the vite.config.ts
+```
+import { configDefaults, defineConfig } from 'vitest/config'
+
+...
+  exclude: [ 
+         ...configDefaults.exclude,
+        '**/tests/**'
+      ],
+```
+- [ ] Commit the code

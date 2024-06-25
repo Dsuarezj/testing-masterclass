@@ -14,7 +14,9 @@
     "start": "vite",
     "build": "vite build",
     "test": "vitest",
-    "serve": "vite preview"
+    "serve": "vite preview",
+    "e2e": "playwright test",
+    "e2e-ui": "playwright test --ui"
   },
   "eslintConfig": {
     "extends": [
@@ -36,6 +38,8 @@
   },
   "devDependencies": {
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
+    "@playwright/test": "^1.45.0",
+    "@types/node": "^20.14.8",
     "@vitejs/plugin-react": "^4.3.1",
     "@vitest/coverage-v8": "^1.6.0",
     "jsdom": "^24.1.0",
