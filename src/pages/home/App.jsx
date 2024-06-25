@@ -20,6 +20,11 @@ function App() {
                 }}>
                     Clean basket
                 </button>
+                <button onClick={() => {
+                    setBasket('');
+                }}>
+                    Sent to warehouse
+                </button>
             </header>
         </div>
     );

@@ -559,7 +559,7 @@ afterAll(() => server.close())
   }
   ```
 - [ ] Check the playwright.config.js file and see that we have the configuration to run the test in different browsers. Uncomment the last part: 
-```
+```javascript
 webServer: {
      command: 'npm run start',
      url: 'http://localhost:5173/',
@@ -568,7 +568,7 @@ webServer: {
 ```
 - [ ] Run `npm run e2e-ui` to see the test running in the browser.
 - [ ] Run `npm test` and mention that is also taking the playwright test and trying to run with vitest. So we will to exclude on the vite.config.ts
-```
+```javascript
 import { configDefaults, defineConfig } from 'vitest/config'
 
 ...
@@ -578,3 +578,34 @@ import { configDefaults, defineConfig } from 'vitest/config'
       ],
 ```
 - [ ] Commit the code
+- [ ] Add the first e2e test, can be with the recording or manually:
+  ```javascript
+  import { test, expect } from '@playwright/test';
+
+  test('test', async ({ page }) => {
+  await page.goto('http://localhost:5173/');
+  let fruitsBasket = 'Fruits\' basket';
+  await page.getByLabel(fruitsBasket).click();
+  await page.getByLabel(fruitsBasket).fill('🍎🍂🍎🍂🍂🍂🍂🍎🍂AAS🍏');
+  await page.getByRole('button', { name: 'Clean basket' }).click();
+  await expect(page.getByLabel(fruitsBasket)).toHaveValue('🍎🍎🍎🍏');
+
+  await page.getByRole('button', { name: 'Sent to warehouse' }).click();
+  await expect(page.getByLabel(fruitsBasket)).toHaveValue('');
+  });
+  ```
+
+- [ ] Run the test to check if it is failing.
+- [ ] Add the missing button on the App.jsx file
+  ```javascript
+  <button onClick={() => {
+    setBasket('');
+  }}>
+    Sent to warehouse
+  </button>
+  ```
+- [ ] Recap e2e.
+- [ ] Mention that there are other types of test that we can use, as snapshot test, mutation test, contract test, etc.
+- [ ] Mention the test pyramid or test trophy and that we should try to have a balance between the test that we write.
+- [ ] Mention that this might be too much when writing code, but we need to understand in which stage of our app we will require and if we start growing our codebase or more people is joining the team, we will need to have a good test coverage to warranty that we are not breaking anything. If it is a POC or something that we want to test fast, we can skip some of the test, but we should always try at least some e2e.
+- [ ] Questions?
