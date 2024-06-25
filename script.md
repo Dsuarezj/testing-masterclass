@@ -526,3 +526,27 @@ describe('Storage', () => {
 - [ ] Start the backend and run the test again to check if it is green.
   `cd backend && npm install && npm start`
 - [ ] Mention that what happen if the api we are calling is not ready or charge money every time we do a request. Mention than alternative can be use a library to mock the server.
+- [ ] Mention that jest is great library for start but when you want to do more things will be great to use modern tools as Vitest, that have better performance and allow us to have a easy integration with other tools, that sadly jest could not keep up with.
+- [ ] The structure of the test will be the same, but there are some minor adjustments that we need to our code in order to make it work with Vite. Make sure the branch is up-to-date with main. Run the script ` node migrateToVitest.js`
+- [ ] The migration is done, we can check a bit the files and see that the test hasn't change except for the mocks and some configuration files that were added. 
+- [ ] Remark the use of the new library msw that will help us to mock the server.
+- [ ] Start the mockserver before each test run in `postHarvestHandling.integration.test.js`
+```javascript
+import { beforeAll, afterEach, afterAll } from 'vitest'
+import { server } from '../../mocks/server'
+
+beforeAll(() => server.listen())
+afterEach(() => server.resetHandlers())
+afterAll(() => server.close())
+```
+- [ ] Stop the real server of the backend and rerun the test, see that all of them still green because now you have a folder of mocks that will intercept the request and return the response that you want.
+- [ ] Commit the code
+- [ ] Recap what is mock server.
+
+
+### E2E
+- We will use [Playwright](https://playwright.dev/) to run the test.
+- Run the command to install Playwright `npm install -D playwright`
+- Run the command to install the browser that you want to use `npx playwright install`
+- [ ] While installing explain that in here we try to test the whole application as close as possible to the real world, always taking into account the user perspective, try to write one or two base on the longest user journey. These are the most expensive tests, since it will write on the real database and will use the real server, and we will try to simulate real devices. 
+- [ ] Mention the extension that you can use to record the test write test.

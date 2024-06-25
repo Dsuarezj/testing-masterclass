@@ -1,13 +1,17 @@
 import { sentToWarehouse } from "./postHarvestHandling";
+import { beforeAll, afterEach, afterAll } from 'vitest'
+import { server } from '../../mocks/server'
 
-describe.only('Storage', () => {
+beforeAll(() => server.listen())
+afterEach(() => server.resetHandlers())
+afterAll(() => server.close())
+
+describe('Storage', () => {
     it('should sent the basket to the warehouse', async () => {
         const fetchSpy =
-            jest.spyOn(global, 'fetch')
+            vi.spyOn(global, 'fetch')
 
         let response = await sentToWarehouse('🍎🍎🍏');
-
-        console.log("*******" + JSON.stringify(response));
 
         expect(response).toEqual({status: 'received', message: 'Basket received'});
         expect(fetchSpy).toHaveBeenCalled();

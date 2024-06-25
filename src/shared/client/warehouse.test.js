@@ -1,6 +1,6 @@
 import { packageFruitBasket } from "./warehouse";
 
-global.fetch = jest.fn();
+global.fetch = vi.fn();
 
 beforeEach(() => {
     fetch.mockClear();
