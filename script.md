@@ -160,13 +160,15 @@ Note: refer to the [cheatsheet](https://testing-library.com/docs/react-testing-l
   export async function packageFruitBasket(basket) {
       if (!basket) throw new Error('Basket is empty');
       try {
-          return await fetch('http://localhost:3001/warehouse/package', {
+          const response =  await fetch('http://localhost:3001/warehouse/package', {
               method: 'POST',
               headers: {
                   'Content-Type': 'application/json'
               },
               body: JSON.stringify({ basket: basket })
-          }).then(response => response.json());
+          })
+  
+          return await response.json();
       } catch (e) {
           return { status: 'failed' };
       }
