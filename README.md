@@ -49,14 +49,22 @@ By working through this project, you will learn how to:
 - Apply Test-Driven Development (TDD) principles.
 - Use testing tools and libraries such as Jest and React Testing Library.
 
+## Exercises
+
+- checkout to `solution` branch
+- Add an e2e test that check if the button `Send to warehouse` works and that is empty the basket after it is clicked
+- Add a component test that checks if the button `Send to warehouse` is disabled when the basket is empty and implement it
+- Add a component test that checks if the button `Send to warehouse` and the response is correct then empty the basket
+- Add a component test that checks if the button `Send to warehouse` and the response fails then the basket is not empty and the error message is displayed, and implement it. 
+
 ## Learning Resources:
 
-- [React Testing Library Documentation] (https://testing-library.com/docs/react-testing-library/intro/)
-- [Jest Documentation] (https://jestjs.io/)
-- [TDD] (https://www.thoughtworks.com/insights/blog/test-driven-development-best-thing-has-happened-software-design)
-- [Vitest] (https://vitest.dev/api/)
-- [Test doubles] (https://freedium.cfd/https://pandaquests.medium.com/test-doubles-in-javascript-3293767e33e0#:~:text=The%20purpose%20of%20test%20doubles,in%20the%20system%20during%20testing.)
-- [Migrate jest to vite] (https://coreui.io/blog/how-to-migrate-create-react-app-to-vite/)
+- [React Testing Library Documentation](https://testing-library.com/docs/react-testing-library/intro/)
+- [Jest Documentation](https://jestjs.io/)
+- [TDD](https://www.thoughtworks.com/insights/blog/test-driven-development-best-thing-has-happened-software-design)
+- [Vitest](https://vitest.dev/api/)
+- [Test doubles](https://freedium.cfd/https://pandaquests.medium.com/test-doubles-in-javascript-3293767e33e0#:~:text=The%20purpose%20of%20test%20doubles,in%20the%20system%20during%20testing.)
+- [Migrate jest to vite](https://coreui.io/blog/how-to-migrate-create-react-app-to-vite/)
 
 
 Refer to the branch `solution` to see the end result
